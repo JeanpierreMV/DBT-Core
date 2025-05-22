@@ -1,0 +1,21 @@
+# DBT artifacts
+target/
+dbt_modules/
+logs/
+
+# Mac y Linux
+.DS_Store
+*.pyc
+__pycache__/
+
+# Windows
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Virtual envs
+venv/
+dbt_venv/
+.env/

@@ -1,0 +1,119 @@
+version: 2
+
+models:
+  - name: dim_cliente
+    description: Dimensión de clientes del sistema.
+    columns:
+      - name: UidCliente
+        description: Identificador único del cliente.
+        tests:
+          - not_null
+          - unique
+      - name: origenCl
+        description: ID original del cliente en la base transaccional.
+        tests:
+          - not_null
+      - name: IdUbicacion
+        description: ID de ubicación referencial.
+        tests:
+          - relationships:
+              to: ref('dim_ubicacion')
+              field: origenUb
+
+  - name: dim_fuente
+    description: Dimensión de fuentes de origen de leads.
+    columns:
+      - name: UidFuente
+        tests:
+          - not_null
+          - unique
+      - name: origenFue
+        tests:
+          - not_null
+
+  - name: dim_lote
+    description: Dimensión de lotes disponibles en proyectos.
+    columns:
+      - name: UidLote
+        tests:
+          - not_null
+          - unique
+      - name: origenLote
+        tests:
+          - not_null
+      - name: IdProyecto
+        tests:
+          - relationships:
+              to: ref('dim_proyecto')
+              field: origenProy
+
+  - name: dim_proyecto
+    description: Dimensión de proyectos inmobiliarios.
+    columns:
+      - name: UidProyecto
+        tests:
+          - not_null
+          - unique
+      - name: origenProy
+        tests:
+          - not_null
+
+  - name: dim_ubicacion
+    description: Dimensión de ubicación geográfica.
+    columns:
+      - name: UidDimUbicacion
+        tests:
+          - not_null
+          - unique
+      - name: origenUb
+        tests:
+          - not_null
+
+  - name: dim_usuario
+    description: Dimensión de usuarios registrados en el sistema.
+    columns:
+      - name: UidUsuario
+        tests:
+          - not_null
+          - unique
+      - name: origenUsu
+        tests:
+          - not_null
+
+  - name: fact_leads
+    description: Tabla de hechos que representa los leads registrados.
+    columns:
+      - name: UidLead
+        tests:
+          - not_null
+          - unique
+      - name: UidDimCliente
+        tests:
+          - relationships:
+              to: ref('dim_cliente')
+              field: UidCliente
+      - name: UidDimFuente
+        tests:
+          - relationships:
+              to: ref('dim_fuente')
+              field: UidFuente
+      - name: UidDimUsuario
+        tests:
+          - relationships:
+              to: ref('dim_usuario')
+              field: UidUsuario
+      - name: UidDimLote
+        tests:
+          - relationships:
+              to: ref('dim_lote')
+              field: UidLote
+      - name: UidDimUbicacion
+        tests:
+          - relationships:
+              to: ref('dim_ubicacion')
+              field: UidDimUbicacion
+      - name: UidDimProyecto
+        tests:
+          - relationships:
+              to: ref('dim_proyecto')
+              field: UidProyecto

@@ -1,0 +1,96 @@
+version: 2
+
+models:
+  - name: stg_Cliente
+    description: Datos limpios del cliente desde la base transaccional.
+    columns:
+      - name: IdCliente
+        tests: [not_null, unique]
+      - name: NumeroDocumento
+        tests: [not_null]
+      - name: FechaCliente
+        tests: [not_null]
+
+  - name: stg_Fuente
+    description: Datos limpios de fuentes de leads.
+    columns:
+      - name: IdFuente
+        tests: [not_null, unique]
+      - name: NombreFuente
+        tests: [not_null]
+
+  - name: stg_Lote
+    description: Datos limpios de lotes inmobiliarios.
+    columns:
+      - name: IdLote
+        tests: [not_null, unique]
+      - name: IdProyecto
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_proyecto')
+              field: IdProyecto
+
+  - name: stg_Proyecto
+    description: Datos limpios de proyectos inmobiliarios.
+    columns:
+      - name: IdProyecto
+        tests: [not_null, unique]
+      - name: nombre
+        tests: [not_null]
+
+  - name: stg_Ubicacion
+    description: Datos limpios de relaciones de ubicación.
+    columns:
+      - name: IdUbicacion
+        tests: [not_null, unique]
+      - name: IdDepartamento
+        tests: [not_null]
+      - name: IdProvincia
+        tests: [not_null]
+      - name: IdDistrito
+        tests: [not_null]
+
+  - name: stg_Usuario
+    description: Datos limpios de usuarios.
+    columns:
+      - name: IdUsuario
+        tests: [not_null, unique]
+      - name: Email
+        tests: [not_null]
+
+  - name: stg_Departamento
+    description: Catálogo limpio de departamentos.
+    columns:
+      - name: IdDepartamento
+        tests: [not_null, unique]
+
+  - name: stg_Provincia
+    description: Catálogo limpio de provincias.
+    columns:
+      - name: IdProvincia
+        tests: [not_null, unique]
+
+  - name: stg_Distrito
+    description: Catálogo limpio de distritos.
+    columns:
+      - name: IdDistrito
+        tests: [not_null, unique]
+
+  - name: stg_EstadoCivil
+    description: Catálogo limpio de estado civil.
+    columns:
+      - name: IdEstadoCivil
+        tests: [not_null, unique]
+
+  - name: stg_TipoDocumento
+    description: Catálogo limpio de tipo de documento.
+    columns:
+      - name: IdTipoDocumento
+        tests: [not_null, unique]
+
+  - name: stg_Prioridad
+    description: Catálogo limpio de niveles de prioridad.
+    columns:
+      - name: IdPrioridad
+        tests: [not_null, unique]
