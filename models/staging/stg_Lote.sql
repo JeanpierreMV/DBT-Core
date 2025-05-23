@@ -1,7 +1,8 @@
-{{ config(materialized='incremental') }}
+{{ config(materialized='table') }}
 
 WITH base AS (
-    SELECT
+    SELECT TOP 300
+        IdLote,
         UPPER(LTRIM(RTRIM(Mz))) AS Mz,
         Codigo,
         Area,
