@@ -2,7 +2,6 @@
 
 WITH base AS (
     SELECT
-        IdLote,
         UPPER(LTRIM(RTRIM(Mz))) AS Mz,
         Codigo,
         Area,
