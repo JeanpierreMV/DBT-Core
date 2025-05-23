@@ -24,8 +24,13 @@ jobs:
 
       - name: Instalar ODBC Driver para SQL Server en Windows
         if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          choco install -y microsoft-odbc-driver-17-for-sql-server
+          $url = "https://download.microsoft.com/download/e/9/7/e9773b1d-8a44-49d3-9126-f2f53f3a5b50/msodbcsql.msi"
+          $output = "$env:TEMP\msodbcsql.msi"
+          Invoke-WebRequest -Uri $url -OutFile $output
+          Start-Process msiexec.exe -ArgumentList "/i $output /quiet /norestart IACCEPTMSODBCSQLLICENSETERMS=YES" -Wait
+
 
       - name: Instalar DBT para SQL Server
         run: pip install dbt-core==1.8.9 dbt-sqlserver==1.8.7
