@@ -40,12 +40,17 @@ jobs:
             New-Item -ItemType Directory -Path $HOME\.dbt
           }
 
-      - name: Cargar profiles.yml desde secretos
+      - name: Cargar profiles.yml desde secretos (PowerShell)
         shell: powershell
-        run: echo "${{ secrets.DBT_PROFILES_YML }}" > $HOME\.dbt\profiles.yml
+        run: |
+          $content = '${{ secrets.DBT_PROFILES_YML }}'
+          $content | Out-File -FilePath $HOME\.dbt\profiles.yml -Encoding utf8
 
-      - name: Compilar modelos
-        run: dbt deps && dbt compile
+      - name: Compilar modelos (PowerShell)
+        shell: powershell
+        run: |
+          dbt deps
+          dbt compile
 
       - name: Ejecutar tests (raw y staging)
         run: dbt test --select raw staging --store-failures
