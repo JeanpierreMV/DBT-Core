@@ -28,11 +28,11 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_proyecto')
+              to: ref('stg_Proyecto')
               field: IdProyecto
 
   - name: stg_Proyecto
-    description: Datos limpios de proyectos inmobiliarios.
+    description: Datos limpios de Proyectos inmobiliarios.
     columns:
       - name: IdProyecto
         tests: [not_null, unique]
