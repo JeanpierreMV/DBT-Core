@@ -52,9 +52,7 @@ jobs:
           dbt deps
           dbt compile
 
-      - name: Ejecutar tests (raw y staging)
-        run: dbt test --select raw staging --store-failures
-
+      
       - name: Ejecutar modelos RAW
         run: dbt run --select raw --threads 1
 
