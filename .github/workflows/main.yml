@@ -23,13 +23,13 @@ jobs:
         run: python --version
 
       - name: Instalar ODBC Driver para SQL Server (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
+        shell: powershell
         run: |
           $url = "https://aka.ms/download-odbc-driver-18-windows-x64"
           $output = "$env:TEMP\msodbcsql.msi"
           Invoke-WebRequest -Uri $url -OutFile $output
           Start-Process msiexec.exe -ArgumentList "/i $output /quiet /norestart IACCEPTMSODBCSQLLICENSETERMS=YES" -Wait
+
 
 
 
