@@ -7,7 +7,7 @@ on:
 
 jobs:
   dbt_run:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Clonar repositorio
@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      # ✅ Instalar ODBC Driver 17 para SQL Server
+      
       - name: Instalar ODBC Driver para SQL Server
         run: |
           sudo apt-get update
@@ -37,14 +37,14 @@ jobs:
       - name: Cargar profiles.yml desde secretos
         run: echo "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
 
-      # 🔍 Compilar y validar
+    
       - name: Compilar modelos
         run: dbt deps && dbt compile
 
       - name: Ejecutar tests (raw y staging)
         run: dbt test --select raw staging --store-failures
 
-      # 🚀 Ejecutar modelos
+     
       - name: Ejecutar modelos RAW
         run: dbt run --select raw --threads 2
 
