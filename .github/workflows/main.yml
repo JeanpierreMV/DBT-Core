@@ -13,12 +13,16 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v4
 
-      - name: Configurar Python
+      - name: Forzar instalación limpia de Python 3.11.9
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11.9'
+          architecture: 'x64'
+          cache: 'pip'
 
-      
+      - name: Verificar versión de Python
+        run: python --version
+
       - name: Instalar ODBC Driver para SQL Server
         run: |
           sudo apt-get update
@@ -37,14 +41,12 @@ jobs:
       - name: Cargar profiles.yml desde secretos
         run: echo "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
 
-    
       - name: Compilar modelos
         run: dbt deps && dbt compile
 
       - name: Ejecutar tests (raw y staging)
         run: dbt test --select raw staging --store-failures
 
-     
       - name: Ejecutar modelos RAW
         run: dbt run --select raw --threads 2
 
