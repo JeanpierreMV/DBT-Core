@@ -56,10 +56,10 @@ jobs:
         run: dbt test --select raw staging --store-failures
 
       - name: Ejecutar modelos RAW
-        run: dbt run --select raw --threads 2
+        run: dbt run --select raw --threads 1
 
       - name: Ejecutar modelos STAGING
-        run: dbt run --select staging --threads 2
+        run: dbt run --select staging --threads 1
 
       - name: Generar documentación
         run: dbt docs generate
