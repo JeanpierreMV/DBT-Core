@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 WITH base AS (
-    SELECT
+    SELECT TOP 300
         IdUsuario,
         IdEmpresa,
         IdCeo,
